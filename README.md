@@ -1,99 +1,167 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de monitoreo de actividades agronómicas API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Tabla de Contenido
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [Sistema de monitoreo de actividades agronómicas API](#sistema-de-monitoreo-de-actividades-agronómicas-api)
+  - [Tabla de Contenido](#tabla-de-contenido)
+  - [Descripción](#descripción)
+  - [Prerequisitos](#prerequisitos)
+  - [Iniciando proyecto localmente](#iniciando-proyecto-localmente)
+- [Trabajando con contenedores](#trabajando-con-contenedores)
+    - [Dockerizado](#dockerizado)
+    - [Docker compose](#docker-compose)
+  - [Variables de entorno](#variables-de-entorno)
+  - [Sistema de archivos](#sistema-de-archivos)
+    - [src](#src)
 
-## Description
+## Descripción
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Esta API esta en capacidad de dar respuesta a diferentes solicitudes para diferentes funcionalidades del Ssistema de monitoreo de actividades agronómicas; ayudará a los campesinos a llevar un registro detallado de sus actividades diarias, tales como siembra, riego,  fertilización, cosecha, y otras labores agrícolas. El objetivo es proporcionar a los campesinos una herramienta  que les permita optimizar sus procesos y tomar decisiones informadas basadas en datos históricos y actuales.
+.
 
-## Project setup
+## Prerequisitos
 
-```bash
-$ npm install
+| Nombre                                                            | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Versión   |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| [NodeJs](https://nodejs.org/)                                     | Es un entorno de servidor de código abierto multiplataforma que puede ejecutarse en Windows, Linux, Unix, macOS y más                                                                                                                                                                                                                                                                                                                                                        | `v20.9.0` |
+| [NPM](https://docs.npmjs.com/)                                    | Node Package Manager (administrador de paquetes de Node), es la plataforma donde se descargan multitud de paquetes y librerias pra el desarrollo de software y aplicaciones basadas en Javascript.                                                                                                                                                                                                                                                                           | `v10.1.0` |
+| [Postgres](https://www.postgresql.org/download/)                  | PostgreSQL es un sistema de gestión de bases de datos relacional de código abierto que destaca por su robustez, escalabilidad y cumplimiento de estándares SQL. Es altamente personalizable, lo que permite a los desarrolladores y administradores de bases de datos adaptarlo a sus necesidades específicas. Para su funcionamiento en Windows, puedes descargarlo directamente desde su [página oficial](https://www.postgresql.org/download/).                           | `v16.0`   |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | Software de código abierto utilizado para desplegar aplicaciones dentro de contenedores virtuales, multiplataforma que puede ejecutarse en Windows, Linux, Unix, macOS y más. Para Mac o Windows descarga [Docker Desktop](https://www.docker.com/products/docker-desktop), [Docker Compose](https://docs.docker.com/compose) se instalará automáticamente. En Linux, asegurece de tener la última version de [Compose](https://docs.docker.com/compose/install/) instalada. | `v23.0.1` |
+
+                                                | `v7.1.3`  |
+
+## Iniciando proyecto localmente
+
+1. Clona el repositorio de la api en tu maquina local
+
+   > <https://github.com/yornipaz/agro-monitor.git>
+
+2. Crea una base de datos en postgres y construye o reestaura la estructura correspondiente para el sistema  debes tener en cuenta el nombre del usuario de la base de datos, la contraseña del usuario, el nombre de la base de datos, la dirección de alojamiento y el puerto de la base de datos.
+
+3. Desde la terminal navega hasta la ubicacion donde descargaste el repositorio y ejecuta el comando para instalar dependencias
+
+   > npm i
+
+4. Crear un archivo con las variables de entorno en el apartado de [Variables de entorno](#variables-de-entorno)
+
+5. Una vez cumplido con los anteriores pasos ejecuta el proyecto de manera local
+   > npm run start:dev
+
+# Trabajando con contenedores
+
+Puedes levantar el proyecto en un ambiente de producción, bien sea creando una imagen de Docker y levantando el contenedor correspondiente utilizando sus respectivas variables de entorno o bien sea utilizando la herramienta de Docker composer.
+
+### Dockerizado
+
+1. Construyendo imagen Docker
+
+   Construye de forma manual la imagen de Docker del proyecto, en la terminal del sistema operativo ejecuta el comando
+
+   ```
+   > docker build --pull --rm -f "Dockerfile" -t [nombre-de-imagen]:latest "."
+   ```
+
+1. Para iniciar el contenedor a partir de imagen recientemente creada, en la terminal ejecute el siguiente comando
+
+```
+ docker run --name [nombre-contenedor] -p 3004:3004 -d
+ -e PORT=3004
+ -e NODE_ENV='development'
+ -e DB_PORT='xxxx'
+ -e DB_HOST='xxxx'
+ -e DB_DATABASE='xxxx'
+ -e DB_USERNAME='xxxx'
+ -e DB_PASSWORD='xxx'
+ -e DB_SYNC='public'
+
+ [nombre-de-imagen]:latest
 ```
 
-## Compile and run the project
+3. Eliminar contenedor
+
+   ```
+   Para eliminar primero hay que asegurarse de detenerlo con el siguiente comando
+   > docker stop [nombre-del-contenedor]
+
+   Una vez detenido el contenedor se puede proceder a eliminar el contenedor
+   > docker rm [nombre-del-contenedor]
+
+   ```
+
+4. Eliminar imagen
+
+   ```
+   Una vez esten detenidos todos los contenedores construidos a partir de la imagen, esta se puede eliminar
+   > docker rmi [nombre-de-imagen]
+
+   ```
+
+### Docker compose
+
+El proceso de Dockerizacion para construir la imagen y levantar el contenedor de la aplicación se puede levantar de forma rápida de la siguiente manera
+
+1. Crear un archivo con las variables de entorno necesarias para ejecutar el docker compose, esto lo puedes hacer siguiendo la referencia al apartado de [Variables de entorno](#variables-de-entorno)
+
+1. Levantar el proyecto
+
+Una vez con el archivo .env en la raíz del proyecto puedes ejecutar el siguiente comando
+
+    > docker compose up --build
+
+Este comando procederá a crear una imagen partiendo del contenido del Dockerfile, esta imagen tendrá de nombre 'backendsigp' y seguidamente iniciará un contenedor de la aplicación con el nombre de 'api-sigp', este proceso no se completará si tienes una imagen o contenedor con estos nombres.
+
+1. Detener el docker compose
+
+Para detener el contenedor de la aplicación que se creó, ejecuta el siguiente comando
+
+    > docker compose down
+
+Esto no elimina la imagen del proyecto, si se desea eliminar la imagen que se creó se utiliza el siguiente comando
+
+    > docker compose down --rmi all
+
+## Variables de entorno
+
+En la raiz del proyecto hay un archivo .env.example, a partir de las variables que estan en este archivo, crea un archivo llamado .env en el cual deberas configurar las **variables de entorno** del proyecto, y por cada uno de los valores, asignar su clave y valor tanto para claves la base de datos como para el servidor de minio. aca puedes apreciar un ejemplo de como quedarian este archivo, donde los valores que tiene xxxx son los valores que se han asignado una vez se define el servicio (base de datos y servidor de Minio), mientras que las variables que tienen un valor se deben tomar tal y como estan definidos a continuación:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+PORT=3004
+NODE_ENV='development'
+DB_PORT='xxxx'
+DB_HOST='xxxx'
+DB_DATABASE='xxxx'
+DB_USERNAME='xxxx'
+DB_PASSWORD='xxx'
+DB_SYNC='public'
 ```
 
-## Run tests
+## Sistema de archivos
+
+El sistema de archivos del proyecto esta organizada de la siguiente manera
+
+### src
+
+`Dockerfile`:  
+El Dockerfile se utiliza para construir una imagen de Docker para el proyecto. Contiene instrucciones sobre cómo construir la imagen y configurar el contenedor.
+
+`package.json`:
+El archivo package.json se utiliza para gestionar las dependencias y scripts del proyecto. Incluye información sobre el nombre, versión y dependencias del proyecto.
+
+`common`
+
+- `config`:
+  La carpeta config contiene archivos de configuración para el proyecto. Incluye ajustes para diferentes entornos, como desarrollo, producción y pruebas.
+
+`Modules`
+
+- `acitivity`:
+  El módulo activity maneja la funcionalidad de Actividades Agronómicas en el proyecto. Incluye características como registro,vista,edicion y eliminacion de actividades .
+
+- `parcel`:
+  El módulo hvi maneja la funcionalidad relacionada con la Hoja de Vida Institucional (HVI) del Sistema de Gestión Pedagógica v3.0. Incluye características como crear, actualizar y recuperar registros de HVI.
 
 ```bash
-# unit tests
-$ npm run test
+docker build --build-arg TAG="v0.5.2" -t agro-monitor-backend:0.5.2 --target prod .
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker push agro-monitor-backend:0.5.2
 ```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

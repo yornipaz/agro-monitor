@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  agro-monitor_api:
+    container_name: agro-monitor-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TAG: "v1.0.0"
+      target: dev
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - agro-monitor
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    restart: always
+    depends_on:
+      storage:
+        condition: service_started
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: agro-monitor_postgres
+    hostname: postgres
+    image: postgres:16.0
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-agro-monitor}
+      POSTGRES_USER: ${DB_USERNAME:?err}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?err}
+    volumes:
+      - db_data:/var/lib/postgresql/:rw
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    restart: always
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - agro-monitor
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+networks:
+  agro-monitor:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local

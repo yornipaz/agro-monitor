@@ -1,0 +1,30 @@
+# Ignorar directorios de node_modules
+node_modules
+
+# Ignorar archivo de env
+.env
+
+# Ignorar archivos de registro
+*.log
+
+# Ignorar directorios de control de versiones
+.git
+.gitignore
+
+# Ignorar archivos de editor
+*.swp
+*.swo
+.vscode/
+
+# Ignorar archivos de Docker
+Dockerfile
+.dockerignore
+*.yml
+
+# Ignorar directorios temporales
+tmp
+temp
+
+# Ignorar archivos de configuración específicos del sistema operativo
+.DS_Store
+Thumbs.db

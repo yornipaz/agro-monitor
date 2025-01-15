@@ -1,6 +1,7 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 import { Parcel } from '../../parcels/entity/parcel.entity';
+import { Supply } from './supply.entity';
 
 @Entity()
 
@@ -21,6 +22,8 @@ export class Activity {
     duration: number;
     @ManyToOne(() => Parcel, (parcel) => parcel.activities, { onDelete: 'CASCADE' })
     parcel: Parcel;
+    @ManyToMany(() => Supply, (supply) => supply.activities)
+    supplies: Supply[]; // Insumos utilizados en la actividad
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;

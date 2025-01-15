@@ -52,3 +52,18 @@ CREATE TABLE public.activity (
         REFERENCES public.parcel (id)
         ON DELETE CASCADE                                       -- Cascade delete for related activities
 );
+CREATE TABLE public.supply (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
+    quantity double precision NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE public.activity_supplies_supply (
+    activity_id uuid NOT NULL,
+    supply_id uuid NOT NULL,
+    PRIMARY KEY (activity_id, supply_id),
+    CONSTRAINT fk_activity FOREIGN KEY (activity_id) REFERENCES public.activity (id) ON DELETE CASCADE,
+    CONSTRAINT fk_supply FOREIGN KEY (supply_id) REFERENCES public.supply (id) ON DELETE CASCADE
+);

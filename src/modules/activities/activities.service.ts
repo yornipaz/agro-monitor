@@ -3,25 +3,52 @@ import { Activity } from './entity/activity.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateActivityDto } from './dto/activity.dto';
+import { Supply } from './entity/supply.entity';
+import { Parcel } from '../parcels/entity/parcel.entity';
 
 @Injectable()
 export class ActivitiesService {
     constructor(
         @InjectRepository(Activity)
-        private readonly activitiesRepository: Repository<Activity>,
+        private readonly activityRepository: Repository<Activity>,
+        @InjectRepository(Parcel)
+        private readonly parcelRepository: Repository<Parcel>,
+        @InjectRepository(Supply)
+        private readonly supplyRepository: Repository<Supply>,
     ) { }
 
     async create(createActivityDto: CreateActivityDto): Promise<Activity> {
-        const activity = this.activitiesRepository.create(createActivityDto);
-        return this.activitiesRepository.save(activity);
+        const { type, name, date, duration, parcelId, supplies } = createActivityDto;
+
+        // Fetch the related parcel
+        const parcel = await this.parcelRepository.findOneOrFail({ where: { id: parcelId } });
+
+        // Save the supplies in the database
+        const savedSupplies = await Promise.all(
+            supplies.map((supply) =>
+                this.supplyRepository.save(this.supplyRepository.create(supply)),
+            ),
+        );
+
+        // Create and save the activity
+        const activity = this.activityRepository.create({
+            type,
+            name,
+            date,
+            duration,
+            parcel,
+            supplies: savedSupplies,
+        });
+
+        return this.activityRepository.save(activity);
     }
 
     async findAll(): Promise<Activity[]> {
-        return this.activitiesRepository.find({ relations: ['parcel'] });
+        return this.activityRepository.find({ relations: ['parcel'] });
     }
 
     async findOne(id: string): Promise<Activity> {
-        const activity = await this.activitiesRepository.findOne({
+        const activity = await this.activityRepository.findOne({
             where: { id },
             relations: ['parcel'],
         });
@@ -37,11 +64,11 @@ export class ActivitiesService {
     ): Promise<Activity> {
         const activity = await this.findOne(id);
         Object.assign(activity, updateActivityDto);
-        return this.activitiesRepository.save(activity);
+        return this.activityRepository.save(activity);
     }
 
     async remove(id: string): Promise<void> {
         const activity = await this.findOne(id);
-        await this.activitiesRepository.remove(activity);
+        await this.activityRepository.remove(activity);
     }
 }

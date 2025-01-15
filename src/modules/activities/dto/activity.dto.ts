@@ -1,23 +1,42 @@
-import { IsString, IsNumber, IsDateString, IsNotEmpty, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+import { IsString, IsNumber, IsDateString, IsNotEmpty, IsOptional, ValidateNested, IsArray } from "class-validator";
+
+class SupplyInput {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+    @IsString()
+    description?: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    quantity: number;
+}
 
 export class CreateActivityDto {
     @IsString()
     @IsNotEmpty()
-    type: string; // Type of activity (e.g., planting, irrigation)
+    type: string;
+
     @IsString()
     @IsNotEmpty()
-    name: string; // Type of activity (e.g., planting, irrigation)
+    name: string;
+
     @IsDateString()
     @IsNotEmpty()
-    date: string; // ISO date format (e.g., 2023-12-01)
+    date: string;
 
     @IsNumber()
     @IsNotEmpty()
-    duration: number; // Duration in hours
-
-
+    duration: number;
 
     @IsString()
     @IsNotEmpty()
-    parcelId: string; // The ID of the related parcel
+    parcelId: string;
+
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => SupplyInput)
+    supplies: SupplyInput[];
 }

@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ParcelsService } from './parcels.service';
 import { ParcelsController } from './parcels.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Parcel } from './entity/parcel.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Parcel])],
   providers: [ParcelsService],
   controllers: [ParcelsController]
 })
